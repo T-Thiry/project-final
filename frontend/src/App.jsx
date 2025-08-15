@@ -4,10 +4,10 @@ export const App = () => {
 
   return (
     <Routes>
-      <Route path='/' element={<Signup />}></Route>
-      <Route path='/signup' element={<Signup />}></Route>
-      <Route path='/login' element={<Signup />}></Route>
-      <Route path='/dashboard' element={<Signup />}></Route>
+      <Route path='/' element={<Landing />} />
+      <Route path='/signup' element={<Signup />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/dashboard' element={<Dashboard />} />
     </Routes>
   );
 };
