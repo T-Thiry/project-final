@@ -1,4 +1,10 @@
+import { useState } from 'react';
+
 const Signup = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return ( 
     <div className='signup-container'>
       <h1>Create Your Account</h1>
@@ -9,6 +15,9 @@ const Signup = () => {
             id='name'
             type='text'
             placeholder='Name'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
           />
         </div>
         <div>
@@ -17,6 +26,9 @@ const Signup = () => {
             id='email'
             type='email'
             placeholder='Email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
         <div>
@@ -25,6 +37,9 @@ const Signup = () => {
             id='password'
             type='password'
             placeholder='Password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
           </div>
           <button type='submit'>Sign Up</button>
