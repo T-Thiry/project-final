@@ -1,14 +1,30 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Call backend API to create user
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/signup`, {
+        name,
+        email,
+        password
+      });
+      console.log(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return ( 
     <div className='signup-container'>
       <h1>Create Your Account</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor='name'>Name</label>
           <input
