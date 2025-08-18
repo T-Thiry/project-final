@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -7,6 +8,7 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,6 +21,8 @@ const Signup = () => {
         password
       });
       console.log(response.data);
+        // Redirect to login page after successful signup
+        navigate('/dashboard');
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || 'Something went wrong. Please try again.');
