@@ -13,14 +13,10 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-  
-  const apiUrl = 'http://localhost:8081';
-    // Log the API URL to verify it's being read correctly
-  console.log('API URL:', apiUrl);
-
+    
     try {
       // Call backend API to create user
-      const response = await axios.post(`${apiUrl}/users/signup`, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/signup`, {
         name,
         email,
         password
