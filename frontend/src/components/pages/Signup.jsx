@@ -13,6 +13,10 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    // Log the API URL to verify it's being read correctly
+  console.log('API URL:', process.env.REACT_APP_API_URL);
+
     try {
       // Call backend API to create user
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/signup`, {
