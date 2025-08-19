@@ -16,7 +16,7 @@ const Signup = () => {
     
     try {
       // Call backend API to create user
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/signup`, {
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/users/signup`, {
         name,
         email,
         password
