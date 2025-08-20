@@ -1,3 +1,5 @@
+import { ThemeProvider } from 'styled-components';
+import { theme } from './styles/theme';
 import { Routes, Route } from 'react-router-dom';
 import Landing from './components/pages/Landing';
 import Signup from './components/pages/Signup';
@@ -7,12 +9,14 @@ import Dashboard from './components/pages/Dashboard';
 export const App = () => {
 
   return (
+    <ThemeProvider theme={theme}>
     <Routes>
       <Route path='/' element={<Landing />} />
       <Route path='/signup' element={<Signup />} />
       <Route path='/login' element={<Login />} />
       <Route path='/dashboard' element={<Dashboard />} />
     </Routes>
+    </ThemeProvider>
   );
 };
 
