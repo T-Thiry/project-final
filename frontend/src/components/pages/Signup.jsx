@@ -22,6 +22,10 @@ const Signup = () => {
         password
       });
       console.log(response.data);
+
+      // Store the accessToken in localStorage
+    localStorage.setItem('accessToken', response.data.response.accessToken);
+    
         // Redirect to login page after successful signup
         navigate('/dashboard');
     } catch (err) {
