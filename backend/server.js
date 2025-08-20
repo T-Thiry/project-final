@@ -30,10 +30,6 @@ app.get("/", (req, res) => {
 //endpoint routes
 app.use('/users', userRoutes);
 
-app.get("/", (req, res) => {
-  res.send("Hello Technigo!");
-});
-
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
