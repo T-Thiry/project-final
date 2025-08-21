@@ -170,6 +170,45 @@ const Star = styled.div`
   }
 `;
 
+const FallingStar = styled.div`
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 0 8px white, 0 0 16px white, 0 0 24px white; // Glow effect
+  animation: fall 14s infinite ease-in-out;
+  top: -10%;
+  left: -10%;
+  z-index: 0; // Ensure falling star is behind the content
+
+  &::after {
+    content: '';
+    position: absolute;
+    height: 2px; // Thickness of the tail
+    background: linear-gradient(90deg, rgba(151, 151, 151, 0.8), rgba(255, 255, 255, 0)); // Fading tail effect
+    top: 50%;
+    left: -60px; // Position the tail behind the star
+    transform: translateY(-50%);
+    border-radius: 50px; // Curve the tail
+  }
+
+  @keyframes fall {
+    0% {
+      transform: translate(0vw, -10vh) rotate(45deg);
+      opacity: 1;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate(90vw, 120vh) rotate(45deg);
+      opacity: 0;
+    }
+  }
+`;
+
+
 const Landing = () => {
   const navigate = useNavigate();
 
@@ -203,6 +242,7 @@ const Landing = () => {
             left={star.left}
           />
         ))}
+        <FallingStar /> {/* Single falling star */}
       </StarsContainer>
       <Content>
         <Title>Welcome To StoryBudget</Title>
