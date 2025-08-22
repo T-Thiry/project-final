@@ -44,15 +44,19 @@ const NavButtons = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: ${({ theme, variant }) => variant === 'transparent' ? 'inherit' : theme.colors.pink};
-  color: ${({ theme, variant }) =>
-    variant === 'transparent' ? theme.colors.white : theme.colors.black};
+  background-color: ${({ theme }) => theme.colors.pink};
+  color: ${({ theme }) => theme.colors.black};
   padding: ${({ theme }) => theme.spacing(2)} ${({ theme }) => theme.spacing(4)};
   font-size: ${({ theme }) => theme.typography.fontSize};
   border: none;
   border-radius: ${({ theme }) => theme.spacing(2)};
   cursor: pointer;
 
+  &.transparent {
+    background-color: inherit;
+    color: ${({ theme }) => theme.colors.white};
+  }
+    
   &:hover {
     background-color: ${({ theme }) => theme.colors.limeGreenLight};
   }
@@ -67,7 +71,7 @@ const StarsContainer = styled.div`
   pointer-events: none; // Prevent interaction with stars
 `;
 
-const Star = styled.div`
+const Star = styled(({ top, left, size, duration, ...rest }) => <div {...rest} />)`
   position: absolute;
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
@@ -85,9 +89,9 @@ const Star = styled.div`
     39% 35%
   ); // Creates a star shape
   background-color: white;
-  animation: twinkle ${({ duration }) => duration}s infinite ease-in-out;
-  top: ${({ top }) => top}%;
-  left: ${({ left }) => left}%;
+  animation: twinkle ${props => props.duration}s infinite ease-in-out; ease-in-out;
+  top: ${props => props.top}%;
+  left: ${props => props.left}%;
 
   @keyframes twinkle {
     0%, 100% {
@@ -230,7 +234,7 @@ const Landing = () => {
       <Navbar>
         <Logo>StoryBudget</Logo>
         <NavButtons>
-          <Button variant="transparent" onClick={() => navigate('/signup')}>Sign Up</Button>
+          <Button className="transparent" onClick={() => navigate('/signup')}>Sign Up</Button>
           <Button onClick={() => navigate('/login')}>Login</Button>
         </NavButtons>
       </Navbar>
