@@ -44,8 +44,9 @@ const NavButtons = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: ${({ theme }) => theme.colors.pink};
-  color: ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme, variant }) => variant === 'transparent' ? 'inherit' : theme.colors.pink};
+  color: ${({ theme, variant }) =>
+    variant === 'transparent' ? theme.colors.white : theme.colors.black};
   padding: ${({ theme }) => theme.spacing(2)} ${({ theme }) => theme.spacing(4)};
   font-size: ${({ theme }) => theme.typography.fontSize};
   border: none;
@@ -63,9 +64,7 @@ const StarsContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   pointer-events: none; // Prevent interaction with stars
-  z-index: 1; // Ensure stars are behind the content
 `;
 
 const Star = styled.div`
@@ -204,20 +203,11 @@ const MascotImage = styled.img`
   animation: float 12s ease-in-out infinite;
 
   @keyframes float {
-    0% {
+    0%, 50%, 100%{
       transform:  translateY(0); // Start position
     }
-    25% {
+    25%, 75% {
       transform:  translateY(-10px); // Slight upward movement and rotation
-    }
-    50% {
-      transform: translateY(0); // Float higher
-    }
-    75% {
-      transform: translateY(-10px); // Slight downward movement and rotation
-    }
-    100% {
-      transform: translateY(0); // Return to start
     }
   }
 `;
@@ -240,9 +230,7 @@ const Landing = () => {
       <Navbar>
         <Logo>StoryBudget</Logo>
         <NavButtons>
-          <Button 
-          style={{ backgroundColor: 'inherit', color: 'white' }}
-          onClick={() => navigate('/signup')}>Sign Up</Button>
+          <Button variant="transparent" onClick={() => navigate('/signup')}>Sign Up</Button>
           <Button onClick={() => navigate('/login')}>Login</Button>
         </NavButtons>
       </Navbar>
