@@ -249,7 +249,7 @@ const Landing = () => {
       <ContentContainer>
         <Section>
           <Title>Welcome To StoryBudget</Title>
-          <Text>Manage your budgets effortlessly.</Text>
+          <Text>Your Finances, Your Story, Your Control.</Text>
           <LimeButton onClick={() => navigate('/signup')}>Get Started</LimeButton>
         </Section>
         <MascotSection>
