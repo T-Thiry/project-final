@@ -295,6 +295,7 @@ const Signup = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              autoComplete='name'
             />
           </div>
           <div>
@@ -306,6 +307,7 @@ const Signup = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoComplete='email'
             />
           </div>
           <div>
@@ -317,6 +319,7 @@ const Signup = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              autoComplete='new-password'
             />
             </div>
             <button type='submit' disabled={loading}>
