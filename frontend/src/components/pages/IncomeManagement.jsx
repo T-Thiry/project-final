@@ -30,7 +30,6 @@ const NavButtons = styled.div`
   }
 `;
 
-
 const Button = styled.button`
   background-color: ${({ theme }) => theme.colors.pink};
   color: ${({ theme }) => theme.colors.black};
@@ -46,25 +45,31 @@ const Button = styled.button`
 `;
 
 const IncomeManagementContainer = styled.div`
-  padding: 2rem;
+  max-width: 400px; /* Set a max-width for the content */
+  margin: 40px auto; /* Center the container */
+  padding: ${({ theme }) => theme.spacing(4)};
+  background-color: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.greyLight};
+  border-radius: ${({ theme }) => theme.spacing(2)};
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: ${({ theme }) => theme.spacing(4)};
 `;
 
 const Input = styled.input`
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: ${({ theme }) => theme.spacing(2)};
+  font-size: ${({ theme }) => theme.typography.fontSize};
+  border: 1px solid ${({ theme }) => theme.colors.grey};
+  border-radius: ${({ theme }) => theme.spacing(2)};
 `;
 
 const SaveButton = styled(Button)`
   background-color: ${({ theme }) => theme.colors.primary};
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryDark};
