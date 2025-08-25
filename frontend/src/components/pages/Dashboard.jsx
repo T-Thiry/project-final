@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { FiBarChart2, FiCreditCard, FiTrendingUp, FiEdit } from 'react-icons/fi';
@@ -60,6 +61,7 @@ const LeftPanel = styled.div`
   h2 {
   margin-top: ${({ theme }) => theme.spacing(4)};
   margin-bottom: ${({ theme }) => theme.spacing(2)};
+  }
 `;
 
 const TabButton = styled.button`
@@ -153,13 +155,46 @@ const Card = styled.div`
   }
 `;
 
-
 const Dashboard = () => {
+  const [income, setIncome] = useState(0);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
   const handleLogout = () => {
-    localStorage.removeItem('accessToken'); // Example: Clear the access token
-    navigate('/'); // Redirect to the landing page
+    localStorage.removeItem('accessToken'); 
+    navigate('/'); 
   };
+
+    useEffect(() => {
+      const fetchIncome = async () => {
+        try {
+          setLoading(true);
+          const incomeData = await fetchIncomeFromAPI(); // Replace with your API call
+          setIncome(incomeData); // Update the state with fetched income
+        } catch (error) {
+          console.error('Error fetching income:', error);
+          alert('Failed to fetch income data. Please try again later.');
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchIncome();
+    }, []); // Run this effect only once when the component mounts
+  
+    const fetchIncomeFromAPI = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/income'); // Replace with your actual API endpoint
+        if (!response.ok) {
+          throw new Error('Failed to fetch income');
+        }
+        const data = await response.json();
+        return data.income; // Assuming the API returns { income: 29000 }
+      } catch (error) {
+        console.error('Error fetching income:', error);
+        return 0; // Default to 0 if there's an error
+      }
+    };
 
   return (
     <>
@@ -217,7 +252,11 @@ const Dashboard = () => {
                 <FiEdit />
               </span>
                 <h4>Income</h4>
-                <p>SEK 0</p>
+                {loading ? (
+                  <p>Loading...</p>
+                ) : (
+                  <p>SEK {income}</p>
+                )}
                 <span>Additional Info</span>
               </Card>
             </CardContainer>

@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoutes from "./routes/userRoutes.js";
+import incomeRoutes from "./routes/incomeRoutes.js";
 import listEndpoints from "express-list-endpoints";
 
 dotenv.config();
@@ -29,6 +30,7 @@ app.get("/", (req, res) => {
 
 //endpoint routes
 app.use('/users', userRoutes);
+app.use('/income', incomeRoutes); 
 
 // Start the server
 app.listen(port, () => {
