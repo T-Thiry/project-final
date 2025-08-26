@@ -10,10 +10,7 @@ dotenv.config();
 console.log('JWT_SECRET:', process.env.JWT_SECRET); 
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/final-project";
-mongoose.connect(mongoUrl, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(mongoUrl);
 mongoose.Promise = Promise;
 
 const port = process.env.PORT || 8080;
