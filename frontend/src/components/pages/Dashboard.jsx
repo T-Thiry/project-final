@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { FiBarChart2, FiCreditCard, FiTrendingUp, FiEdit } from 'react-icons/fi';
 import { FaCoins } from 'react-icons/fa';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { theme } from '../../styles/theme';
 
 const Navbar = styled.nav`
   display: flex;
@@ -90,10 +92,9 @@ const RightContent = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.spacing(4)};
   grid-template-columns: repeat(1, 1fr); // Default to one column
-  grid-auto-rows: 1fr; // Ensure all rows have equal height
 
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr); // Two columns on tablet
+  @media (min-width: 768px) and (max-width: 1023px) {
+    grid-template-columns: repeat(1, 1fr); // Two columns on tablet
   }
 
   @media (min-width: 1024px) {
@@ -107,6 +108,16 @@ const Section = styled.div`
   border-radius: ${({ theme }) => theme.spacing(2)};
   padding: ${({ theme }) => theme.spacing(4)};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 75%;
+
+  &.chart-section {
+    background-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.white};
+  }
+
+  &.chart-section h3 {
+    margin-bottom: ${({ theme }) => theme.spacing(2)};
+  }
 `;
 
 const CardContainer = styled.div`
@@ -154,6 +165,16 @@ const Card = styled.div`
     font-size: 1rem; // Adjust the size of the emoji
   }
 `;
+
+// Sample data for the bar chart
+const data = [
+  { name: 'Jan', Income: 25000, Spendings: 18500 },
+  { name: 'Feb', Income: 25000, Spendings: 19300 },
+  { name: 'Mar', Income: 25000, Spendings: 19800 },
+  { name: 'Apr', Income: 25000, Spendings: 19000 },
+  { name: 'May', Income: 25000, Spendings: 19800 },
+  { name: 'Jun', Income: 25000, Spendings: 20800 },
+];
 
 const Dashboard = () => {
   const [income, setIncome] = useState(0);
@@ -223,7 +244,7 @@ const Dashboard = () => {
         <RightContent>
           <Section>
           <CardContainer>
-              <Card>
+              <Card >
               <span className="edit-icon">
                 <FiEdit />
               </span>
@@ -252,18 +273,24 @@ const Dashboard = () => {
                 <FiEdit />
               </span>
                 <h4>Income</h4>
-                {loading ? (
-                  <p>Loading...</p>
-                ) : (
-                  <p>SEK {income}</p>
-                )}
+                {loading ? null : <p>SEK {income}</p>}
                 <span>Additional Info</span>
               </Card>
             </CardContainer>
           </Section>
-          <Section>
-            <h3>Section 2</h3>
-            <p>Content for section 2.</p>
+          <Section className='chart-section'>
+            <h3>Balance</h3>
+            <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={data}>
+                <CartesianGrid strokeDasharray="1 2" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="Income" fill={theme.colors.limeGreen} />
+                <Bar dataKey="Spendings" fill={theme.colors.pinkLight} />
+              </BarChart>
+            </ResponsiveContainer>
           </Section>
           <Section>
             <h3>Section 3</h3>
