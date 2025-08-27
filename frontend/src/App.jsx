@@ -7,6 +7,7 @@ import Signup from './components/pages/Signup';
 import Login from './components/pages/Login';
 import Dashboard from './components/pages/Dashboard';
 import IncomeManagement from './components/pages/IncomeManagement';
+import SpendingsManagement from './components/pages/SpendingsManagement';
 
 export const App = () => {
 
@@ -19,6 +20,7 @@ export const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path="/income-management" element={<IncomeManagement />} />
+        <Route path="/spendings-management" element={<SpendingsManagement />} />
       </Routes>
     </ThemeProvider>
   );

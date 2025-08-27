@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/userRoutes.js";
 import incomeRoutes from "./routes/incomeRoutes.js";
 import listEndpoints from "express-list-endpoints";
+import spendingsRoutes from "./routes/spendingsRoutes.js";
 
 dotenv.config();
 console.log('JWT_SECRET:', process.env.JWT_SECRET); 
@@ -30,7 +31,8 @@ app.get("/", (req, res) => {
 
 //endpoint routes
 app.use('/users', userRoutes);
-app.use('/income', incomeRoutes); 
+app.use('/income', incomeRoutes);
+app.use('/spendings', spendingsRoutes); 
 
 // Start the server
 app.listen(port, () => {

@@ -178,6 +178,7 @@ const data = [
 
 const Dashboard = () => {
   const [income, setIncome] = useState(0);
+  const [totalSpendings, setTotalSpendings] = useState(0);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -186,34 +187,41 @@ const Dashboard = () => {
     navigate('/'); 
   };
 
-    useEffect(() => {
-      const fetchIncome = async () => {
-        try {
-          setLoading(true);
-          const incomeData = await fetchIncomeFromAPI(); // Replace with your API call
-          setIncome(incomeData); // Update the state with fetched income
-        } catch (error) {
-          console.error('Error fetching income:', error);
-          alert('Failed to fetch income data. Please try again later.');
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      fetchIncome();
-    }, []); // Run this effect only once when the component mounts
-  
-    const fetchIncomeFromAPI = async () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      await fetchIncome();
+      await fetchTotalSpendings();
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+
+  const fetchIncome = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/income');
+      if (!response.ok) {
+        throw new Error('Failed to fetch income');
+      }
+      const data = await response.json();
+      setIncome(data.income);
+    } catch (error) {
+      console.error('Error fetching income:', error);
+    }
+  };
+
+    const fetchTotalSpendings = async () => {
       try {
-        const response = await fetch('http://localhost:8080/income'); // Replace with your actual API endpoint
+        const response = await fetch('http://localhost:8080/spendings/total'); 
         if (!response.ok) {
-          throw new Error('Failed to fetch income');
+          throw new Error('Failed to fetch total spendings');
         }
         const data = await response.json();
-        return data.income; // Assuming the API returns { income: 29000 }
+        setTotalSpendings(data.total);
       } catch (error) {
-        console.error('Error fetching income:', error);
-        return 0; // Default to 0 if there's an error
+        console.error('Error fetching total spendings:', error);
       }
     };
 
@@ -253,11 +261,11 @@ const Dashboard = () => {
                 <span>Additional Info</span>
               </Card>
               <Card>
-              <span className="edit-icon">
+              <span className="edit-icon" onClick={() => navigate('/spendings-management')} >
                 <FiEdit />
               </span>
                 <h4>Spendings</h4>
-                <p>SEK 0</p>
+                <p>SEK {loading ? 'Loading...' : totalSpendings}</p>
                 <span>Additional Info</span>
               </Card>
               <Card>
