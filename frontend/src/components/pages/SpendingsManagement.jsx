@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { FiX } from 'react-icons/fi';
 
 const Navbar = styled.nav`
   display: flex;
@@ -43,7 +44,7 @@ const Button = styled.button`
   }
 `;
 
-const IncomeManagementContainer = styled.div`
+const SpendingsManagementContainer = styled.div`
   max-width: 400px; /* Set a max-width for the content */
   margin: 40px auto; /* Center the container */
   padding: ${({ theme }) => theme.spacing(4)};
@@ -75,10 +76,73 @@ const SaveButton = styled(Button)`
   }
 `;
 
+const CardContainer = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(4)};
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  margin-top: ${({ theme }) => theme.spacing(4)};
+`;
+
+const Card = styled.div`
+  background-color: ${({ theme }) => theme.colors.greyLight};
+  border: 1px solid ${({ theme }) => theme.colors.grey};
+  border-radius: ${({ theme }) => theme.spacing(2)};
+  padding: ${({ theme }) => theme.spacing(4)};
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+
+  h4 {
+  margin-bottom: ${({ theme }) => theme.spacing(2)};
+  }
+
+  p {
+  margin: 0;
+
+  .actions {
+    margin-top: ${({ theme }) => theme.spacing(2)};
+    display: flex;
+    justify-content: space-between;
+}
+`;
+
+const DeleteIcon = styled.button`
+  position: absolute;
+  top: ${({ theme }) => theme.spacing(2)};
+  right: ${({ theme }) => theme.spacing(2)};
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.colors.black};
+  font-size: 1rem;
+  cursor: pointer;
+`;
+
+// Helper function to capitalize the first letter of a string
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 const SpendingsManagement = () => {
   const navigate = useNavigate();
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
+  const [spendings, setSpendings] = useState([]);
+
+  useEffect(() => {
+    const fetchSpendings = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/spendings');
+        if (!response.ok) {
+          throw new Error('Failed to fetch spendings');
+        }
+        const data = await response.json();
+        setSpendings(data);
+      } catch (error) {
+        console.error('Error fetching spendings:', error);
+      }
+    };
+
+    fetchSpendings();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,11 +152,13 @@ const SpendingsManagement = () => {
       return;
     }
 
-      try {
-      await saveSpendingToAPI(category, Number(amount));
-      console.log('Spending submitted:', { category, amount });
-      
-      navigate('/dashboard'); // Navigate back to the dashboard after submission
+    try {
+      const newSpending = await saveSpendingToAPI(category, Number(amount));
+      console.log('Spending submitted:', newSpending);
+
+      setSpendings(prevSpendings => [...prevSpendings, newSpending]);
+      setCategory('');
+      setAmount('');
     } catch (error) {
       console.error('Error submitting spedning:', error);
       alert('Failed to save spending. Please try again.');
@@ -112,6 +178,9 @@ const SpendingsManagement = () => {
     if (!response.ok) {
       throw new Error('Failed to save spending');
     }
+
+    const newSpending = await response.json(); // Parse the response to get the new spending
+    return newSpending;
   };
 
   return (
@@ -122,7 +191,7 @@ const SpendingsManagement = () => {
             <Button onClick={() => navigate('/dashboard')}>Back to Dashboard</Button>
           </NavButtons>
         </Navbar>
-        <IncomeManagementContainer>
+        <SpendingsManagementContainer>
         <h2>Manage Spendings</h2>
         <Form onSubmit={handleSubmit}>
           <label htmlFor="category">Category:</label>
@@ -133,13 +202,17 @@ const SpendingsManagement = () => {
           required
           >
             <option value="" disabled>Select a category</option>
-            <option value="grocery">Grocery</option>
-            <option value="shopping">Shopping</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="restaurants">Restaurants</option>
-            <option value="cafe">Cafe</option>
-            <option value="travel">Travel</option>
-            <option value="others">Others</option>
+            <option value="Rent">Rent</option>
+            <option value="Insurance">Insurance</option>
+            <option value="Broadband">Broadband</option>
+            <option value="Phone">Phone</option>
+            <option value="Grocery">Grocery</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Restaurants">Restaurants</option>
+            <option value="Cafe">Cafe</option>
+            <option value="Travel">Travel</option>
+            <option value="Others">Others</option>
           </select>
           <label htmlFor="amount">Amount:</label>
           <Input
@@ -150,9 +223,21 @@ const SpendingsManagement = () => {
             placeholder="Enter your the amount"
             required
           />
-          <SaveButton type="submit">Save Spending</SaveButton>
+          <SaveButton type="submit">Add Spending</SaveButton>
         </Form>
-      </IncomeManagementContainer>
+        <CardContainer>
+          {spendings.map((spending) => (
+            <Card key={spending._id}>
+              <DeleteIcon>
+                <FiX />
+              </DeleteIcon>
+              <h4>{capitalizeFirstLetter(spending.category)}</h4>
+              <p>Amount: SEK {spending.amount}</p>
+              <p>Date: {new Date(spending.createdAt).toLocaleDateString()}</p>
+            </Card>
+          ))}
+        </CardContainer>
+      </SpendingsManagementContainer>
     </>
   );
 };
