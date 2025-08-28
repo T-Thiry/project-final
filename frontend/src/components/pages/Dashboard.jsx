@@ -5,6 +5,7 @@ import { FiBarChart2, FiCreditCard, FiTrendingUp, FiEdit } from 'react-icons/fi'
 import { FaCoins } from 'react-icons/fa';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { theme } from '../../styles/theme';
+import VariableExpenses from './VariableExpenses';
 
 const Navbar = styled.nav`
   display: flex;
@@ -108,7 +109,10 @@ const Section = styled.div`
   border-radius: ${({ theme }) => theme.spacing(2)};
   padding: ${({ theme }) => theme.spacing(4)};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-height: 75%;
+
+  h2 {
+    margin-bottom: ${({ theme }) => theme.spacing(2)};
+  }
 
   &.chart-section {
     background-color: ${({ theme }) => theme.colors.primary};
@@ -135,7 +139,7 @@ const CardContainer = styled.div`
 `;
 
 const Card = styled.div`
-  background-color: ${({ theme }) => theme.colors.greyLight}; 
+  background-color: ${({ bgColor, theme }) => bgColor || theme.colors.greyLight}; 
   border: 1px solid ${({ theme }) => theme.colors.grey};
   border-radius: ${({ theme }) => theme.spacing(2)};
   padding: ${({ theme }) => theme.spacing(4)};
@@ -252,7 +256,7 @@ const Dashboard = () => {
         <RightContent>
           <Section>
           <CardContainer>
-              <Card >
+              <Card bgColor={theme.colors.limeGreenExtraLight}>
               <span className="edit-icon">
                 <FiEdit />
               </span>
@@ -260,7 +264,7 @@ const Dashboard = () => {
                 <p>SEK 0</p>
                 <span>Additional Info</span>
               </Card>
-              <Card>
+              <Card bgColor={theme.colors.greyLight}>
               <span className="edit-icon" onClick={() => navigate('/spendings-management')} >
                 <FiEdit />
               </span>
@@ -268,7 +272,7 @@ const Dashboard = () => {
                 <p>SEK {loading ? 'Loading...' : totalSpendings}</p>
                 <span>Additional Info</span>
               </Card>
-              <Card>
+              <Card bgColor={theme.colors.pinkLight}>
               <span className="edit-icon">
                 <FiEdit />
               </span>
@@ -276,7 +280,7 @@ const Dashboard = () => {
                 <p>SEK 0</p>
                 <span>Additional Info</span>
               </Card>
-              <Card>
+              <Card bgColor={theme.colors.limeGreenLight}>
               <span className="edit-icon" onClick={() => navigate('/income-management')} >
                 <FiEdit />
               </span>
@@ -301,8 +305,8 @@ const Dashboard = () => {
             </ResponsiveContainer>
           </Section>
           <Section>
-            <h3>Section 3</h3>
-            <p>Content for section 3.</p>
+            <h2>Varable Expenses</h2>
+            <VariableExpenses />
           </Section>
           <Section>
             <h3>Section 4</h3>
