@@ -6,6 +6,7 @@ import { FaCoins } from 'react-icons/fa';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { theme } from '../../styles/theme';
 import VariableExpenses from './VariableExpenses';
+import FixedExpenses from './FixedExpenses';
 
 const Navbar = styled.nav`
   display: flex;
@@ -65,6 +66,9 @@ const LeftPanel = styled.div`
   margin-top: ${({ theme }) => theme.spacing(4)};
   margin-bottom: ${({ theme }) => theme.spacing(2)};
   }
+
+  @media (max-width: 767px) {
+  display: none; // Hide left panel on mobile
 `;
 
 const TabButton = styled.button`
@@ -91,15 +95,11 @@ const RightContent = styled.div`
   flex: 1;
   padding: ${({ theme }) => theme.spacing(4)};
   display: grid;
-  gap: ${({ theme }) => theme.spacing(4)};
-  grid-template-columns: repeat(1, 1fr); // Default to one column
+  gap: ${({ theme }) => theme.spacing(2)};
+  grid-template-columns: 40% 60%; // Default to one column
 
-  @media (min-width: 768px) and (max-width: 1023px) {
-    grid-template-columns: repeat(1, 1fr); // Two columns on tablet
-  }
-
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr); // Two columns on desktop
+  @media (max-width: 1023px) {
+    grid-template-columns: 1fr; // Two columns on tablet
   }
 `;
 
@@ -110,8 +110,9 @@ const Section = styled.div`
   padding: ${({ theme }) => theme.spacing(4)};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-  h2 {
+  h3 {
     margin-bottom: ${({ theme }) => theme.spacing(2)};
+     font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
   }
 
   &.chart-section {
@@ -147,13 +148,15 @@ const Card = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   h4 {
-    font-size: 1.25rem;
-    margin-bottom: ${({ theme }) => theme.spacing(2)};
+    font-size: 1rem;
+    font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
+    margin-bottom: ${({ theme }) => theme.spacing(1)};
   }
 
   p {
-    font-size: 1rem;
-    margin-bottom: ${({ theme }) => theme.spacing(2)};
+    font-size: 1.25rem;
+    font-weight: ${({ theme }) => theme.typography.fontWeightSemiBold};
+    margin: 0;
   }
 
   span {
@@ -295,22 +298,46 @@ const Dashboard = () => {
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={data}>
                 <CartesianGrid strokeDasharray="1 2" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
+                <XAxis dataKey="name"
+                tick={{
+                  fill: theme.colors.greyLight, // Lighter gray color for the text
+                }} 
+                />
+                <YAxis
+                  tickFormatter={(value) => {
+                    if (value >= 1000) {
+                      return `${(value / 1000).toFixed(1)}K`; // Format numbers as "K"
+                    }
+                    return value;
+                  }}
+                  tick={{
+                    fill: theme.colors.greyLight, // Lighter gray color for the text
+                  }}
+                />
+                <Tooltip
+                  formatter={(value) => {
+                    if (value >= 1000) {
+                      return `${(value / 1000).toFixed(1)}K`; // Format tooltip numbers as "K"
+                    }
+                    return value;
+                  }}
+                />
+                <Legend
+                  align="left" 
+                  wrapperStyle={{ marginLeft: '65px' }}
+                />
                 <Bar dataKey="Income" fill={theme.colors.limeGreen} />
                 <Bar dataKey="Spendings" fill={theme.colors.pinkLight} />
               </BarChart>
             </ResponsiveContainer>
           </Section>
           <Section>
-            <h2>Varable Expenses</h2>
+            <h3>Variable Expenses</h3>
             <VariableExpenses />
           </Section>
           <Section>
-            <h3>Section 4</h3>
-            <p>Content for section 4.</p>
+            <h3>Fixed Expenses</h3>
+            <FixedExpenses />
           </Section>
         </RightContent>
       </DashboardContainer>

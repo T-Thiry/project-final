@@ -4,7 +4,7 @@ const spendingsSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ["Rent", "Insurance", "Broadband", "Phone", "Grocery", "Shopping", "Entertainment", "Restaurants", "Cafe", "Travel", "Others"]
+    enum: ["Rent", "Parking", "Insurance", "Broadband", "Phone", "Grocery", "Shopping", "Entertainment", "Restaurants", "Cafe", "Travel", "Others"]
 },
   amount: {
     type: Number,

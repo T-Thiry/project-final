@@ -203,6 +203,7 @@ const SpendingsManagement = () => {
           >
             <option value="" disabled>Select a category</option>
             <option value="Rent">Rent</option>
+            <option value="Parking">Parking</option>
             <option value="Insurance">Insurance</option>
             <option value="Broadband">Broadband</option>
             <option value="Phone">Phone</option>

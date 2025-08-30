@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 import { FiHome } from 'react-icons/fi';
-import { MdOutlineMovie } from 'react-icons/md';
-import { AiOutlineShoppingCart, AiOutlineSafetyCertificate } from 'react-icons/ai';
+import { MdOutlineMovie, MdOutlineRestaurant, MdOutlineLocalCafe } from 'react-icons/md';
+import { AiOutlineShoppingCart, AiOutlineCar, AiOutlineSafetyCertificate } from 'react-icons/ai';
 import { BiMobileAlt } from 'react-icons/bi';
 
 
@@ -53,7 +53,7 @@ const Card = styled.div`
 
   h4 {
     font-size: 1rem;
-     font-weight: ${({ theme }) => theme.typography.fontWeightSemiBold};
+     font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
   }
 
   p {
@@ -70,26 +70,35 @@ const VariableExpenses = () => {
             <FiHome size={20} />
           </Quadrant>
           <Card bgColor={theme.colors.limeGreenExtraLight}>
-            <h4>Rent</h4>
-            <p>SEK 0</p>
+            <h4>Grocery</h4>
+            <p>SEK 2500</p>
           </Card>
           </QuadrantCardPair>
         <QuadrantCardPair>
           <Quadrant bgColor={theme.colors.lightGrey}>
-            <AiOutlineSafetyCertificate size={20} />
+            <AiOutlineShoppingCart size={20}  />
           </Quadrant>
           <Card bgColor={theme.colors.lightGrey}>
-            <h4>Insurance</h4>
-            <p>SEK 0</p>
+            <h4>Shopping</h4>
+            <p>SEK 500</p>
           </Card>
         </QuadrantCardPair>
         <QuadrantCardPair>
           <Quadrant bgColor={theme.colors.pinkLight}>
-            <AiOutlineShoppingCart size={20} />
+            <MdOutlineRestaurant size={20} />
           </Quadrant>
           <Card bgColor={theme.colors.pinkLight}>
-            <h4>Grocery</h4>
-            <p>SEK 0</p>
+            <h4>Restaurants</h4>
+            <p>SEK 800</p>
+          </Card>
+        </QuadrantCardPair>
+        <QuadrantCardPair>
+          <Quadrant bgColor={theme.colors.lightGrey}>
+            <AiOutlineCar size={20} />
+          </Quadrant>
+          <Card bgColor={theme.colors.lightGrey}>
+            <h4>Travel</h4>
+            <p>SEK 500</p>
           </Card>
         </QuadrantCardPair>
         <QuadrantCardPair>
@@ -98,16 +107,16 @@ const VariableExpenses = () => {
           </Quadrant>
           <Card bgColor={theme.colors.limeGreenLight}>
             <h4>Entertainment</h4>
-            <p>SEK 0</p>
+            <p>SEK 400</p>
           </Card>
         </QuadrantCardPair>
         <QuadrantCardPair>
-          <Quadrant bgColor={theme.colors.lightGrey}>
-            <BiMobileAlt size={20} />
+          <Quadrant bgColor={theme.colors.pinkExtraLight}>
+            <MdOutlineLocalCafe size={20} />
           </Quadrant>
-          <Card bgColor={theme.colors.lightGrey}>
-            <h4>Phone</h4>
-            <p>SEK 0</p>
+          <Card bgColor={theme.colors.pinkExtraLight}>
+            <h4>Cafe</h4>
+            <p>SEK 400</p>
           </Card>
         </QuadrantCardPair>
       </VariableExpensesContainer>
