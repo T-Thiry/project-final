@@ -183,6 +183,21 @@ const SpendingsManagement = () => {
     return newSpending;
   };
 
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this spending?');
+    if (!confirmDelete) return;
+
+    try {
+      await fetch(`http://localhost:8080/spendings/${id}`, {
+        method: 'DELETE',
+      });
+      setSpendings((prevSpendings) => prevSpendings.filter((spending) => spending._id !== id));
+    } catch (error) {
+      console.error('Error deleting spending:', error);
+      alert('Failed to delete spending. Please try again.');
+    } 
+  };
+
   return (
     <>
       <Navbar>
@@ -229,7 +244,7 @@ const SpendingsManagement = () => {
         <CardContainer>
           {spendings.map((spending) => (
             <Card key={spending._id}>
-              <DeleteIcon>
+              <DeleteIcon onClick={() => handleDelete(spending._id)}>
                 <FiX />
               </DeleteIcon>
               <h4>{capitalizeFirstLetter(spending.category)}</h4>

@@ -173,20 +173,11 @@ const Card = styled.div`
   }
 `;
 
-// Sample data for the bar chart
-const data = [
-  { name: 'Jan', Income: 25000, Spendings: 18500 },
-  { name: 'Feb', Income: 25000, Spendings: 19300 },
-  { name: 'Mar', Income: 25000, Spendings: 19800 },
-  { name: 'Apr', Income: 25000, Spendings: 19000 },
-  { name: 'May', Income: 25000, Spendings: 19800 },
-  { name: 'Jun', Income: 25000, Spendings: 20800 },
-];
-
 const Dashboard = () => {
   const [income, setIncome] = useState(0);
   const [totalSpendings, setTotalSpendings] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [chartData, setChartData] = useState([]);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -231,6 +222,29 @@ const Dashboard = () => {
         console.error('Error fetching total spendings:', error);
       }
     };
+
+    useEffect(() => {
+      const fetchChartData = async () => {
+        try {
+          const response = await fetch('http://localhost:8080/income/months');
+          if (!response.ok) {
+            throw new Error('Failed to fetch months data');
+          }
+          const monthsData = await response.json();
+          const data = monthsData.map((monthData) => ({
+            name: monthData.month,
+            Income: monthData.amount || 0,
+            Spendings: totalSpendings, // Use totalSpendings state
+          }));
+      setChartData(data);
+      } catch (error) {
+        console.error('Error fetching months data:', error);
+      }
+    };  
+    fetchChartData();
+  }, [totalSpendings]); // Re-fetch chart data when totalSpendings changes
+      
+      
 
   return (
     <>
@@ -296,7 +310,7 @@ const Dashboard = () => {
           <Section className='chart-section'>
             <h3>Balance</h3>
             <ResponsiveContainer width="100%" height={250}>
-              <BarChart data={data}>
+              <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="1 2" />
                 <XAxis dataKey="name"
                 tick={{

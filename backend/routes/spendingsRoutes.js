@@ -39,4 +39,19 @@ router.get("/total", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedSpending = await Spendings.findByIdAndDelete(id); 
+    if (!deletedSpending) {
+      return res.status(404).json({ message: "Spending not found" });
+    }
+    res.status(200).json({ message: "Spending deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting spending:", error.message, error.stack);
+    return res.status(500).json({ error: "Server error" });
+  }
+});
+
 export default router;
