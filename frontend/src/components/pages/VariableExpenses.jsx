@@ -26,8 +26,8 @@ const Quadrant = styled.div`
   justify-content: center;
   width: 48px;
   height: 48px;
-  background-color: ${({ bgColor, theme }) => bgColor || theme.colors.greyLight};
-    border: 1px solid ${({ theme }) => theme.colors.grey};
+  background-color: ${({ $bgColor, theme }) => $bgColor || theme.colors.greyLight};
+  border: 1px solid ${({ theme }) => theme.colors.grey};
   border-radius: ${({ theme }) => theme.spacing(2)};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
@@ -44,7 +44,7 @@ const Card = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(2)};
-  background-color: ${({ bgColor, theme }) => bgColor || theme.colors.greyLight};
+  background-color: ${({ $bgColor, theme }) => $bgColor || theme.colors.greyLight};
   border: 1px solid ${({ theme }) => theme.colors.grey};
   border-radius: ${({ theme }) => theme.spacing(2)};
   padding: ${({ theme }) => theme.spacing(4)};
@@ -66,55 +66,55 @@ const VariableExpenses = () => {
     <>
       <VariableExpensesContainer>
         <QuadrantCardPair>
-          <Quadrant bgColor={theme.colors.limeGreenExtraLight}>
+          <Quadrant $bgColor={theme.colors.limeGreenExtraLight}>
             <FiHome size={20} />
           </Quadrant>
-          <Card bgColor={theme.colors.limeGreenExtraLight}>
+          <Card $bgColor={theme.colors.limeGreenExtraLight}>
             <h4>Grocery</h4>
             <p>SEK 2500</p>
           </Card>
           </QuadrantCardPair>
         <QuadrantCardPair>
-          <Quadrant bgColor={theme.colors.lightGrey}>
+          <Quadrant $bgColor={theme.colors.lightGrey}>
             <AiOutlineShoppingCart size={20}  />
           </Quadrant>
-          <Card bgColor={theme.colors.lightGrey}>
+          <Card $bgColor={theme.colors.lightGrey}>
             <h4>Shopping</h4>
             <p>SEK 500</p>
           </Card>
         </QuadrantCardPair>
         <QuadrantCardPair>
-          <Quadrant bgColor={theme.colors.pinkLight}>
+          <Quadrant $bgColor={theme.colors.pinkLight}>
             <MdOutlineRestaurant size={20} />
           </Quadrant>
-          <Card bgColor={theme.colors.pinkLight}>
+          <Card $bgColor={theme.colors.pinkLight}>
             <h4>Restaurants</h4>
             <p>SEK 800</p>
           </Card>
         </QuadrantCardPair>
         <QuadrantCardPair>
-          <Quadrant bgColor={theme.colors.lightGrey}>
+          <Quadrant $bgColor={theme.colors.lightGrey}>
             <AiOutlineCar size={20} />
           </Quadrant>
-          <Card bgColor={theme.colors.lightGrey}>
+          <Card $bgColor={theme.colors.lightGrey}>
             <h4>Travel</h4>
             <p>SEK 500</p>
           </Card>
         </QuadrantCardPair>
         <QuadrantCardPair>
-          <Quadrant bgColor={theme.colors.limeGreenLight}>
+          <Quadrant $bgColor={theme.colors.limeGreenLight}>
             <MdOutlineMovie size={20} />
           </Quadrant>
-          <Card bgColor={theme.colors.limeGreenLight}>
+          <Card $bgColor={theme.colors.limeGreenLight}>
             <h4>Entertainment</h4>
             <p>SEK 400</p>
           </Card>
         </QuadrantCardPair>
         <QuadrantCardPair>
-          <Quadrant bgColor={theme.colors.pinkExtraLight}>
+          <Quadrant $bgColor={theme.colors.pinkExtraLight}>
             <MdOutlineLocalCafe size={20} />
           </Quadrant>
-          <Card bgColor={theme.colors.pinkExtraLight}>
+          <Card $bgColor={theme.colors.pinkExtraLight}>
             <h4>Cafe</h4>
             <p>SEK 400</p>
           </Card>

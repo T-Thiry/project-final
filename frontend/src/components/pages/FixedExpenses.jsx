@@ -14,7 +14,7 @@ const CardContainer = styled.div`
   `;
 
 const Card = styled.div`
-  background-color: ${({ bgColor, theme }) => bgColor || theme.colors.greyLight};
+  background-color: ${({ $bgColor, theme }) => $bgColor || theme.colors.greyLight};
   border: 1px solid ${({ theme }) => theme.colors.grey};
   border-radius: ${({ theme }) => theme.spacing(2)};
   padding: ${({ theme }) => theme.spacing(2)};
@@ -72,22 +72,22 @@ const FixedExpenses = () => {
   return (
     <div>
       <CardContainer>
-        <Card bgColor={theme.colors.limeGreenExtraLight}>
+        <Card $bgColor={theme.colors.limeGreenExtraLight}>
           <FiHome size={20} />
           <h4>Rent</h4>
           <p>SEK 9600</p>
         </Card>
-        <Card bgColor={theme.colors.greyLight}>
+        <Card $bgColor={theme.colors.greyLight}>
           <FiHome size={20} />
           <h4>Parking</h4>
           <p>SEK 1000</p>
         </Card>
-        <Card bgColor={theme.colors.pinkLight}>
+        <Card $bgColor={theme.colors.pinkLight}>
            <AiOutlineSafetyCertificate size={20} />
           <h4>Insurance</h4>
           <p>SEK 400</p>
         </Card>
-        <Card bgColor={theme.colors.greyLight}>
+        <Card $bgColor={theme.colors.greyLight}>
           <FiWifi size={20} />
           <h4>Broadband</h4>
           <p>SEK 500</p>

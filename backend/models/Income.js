@@ -6,7 +6,14 @@ const incomeSchema = new mongoose.Schema({
    required: true,
    default: 0,
  },
+ month: {
+   type: String,
+   required: true,
+ },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
-
 
 export const Income = mongoose.model("Income", incomeSchema);

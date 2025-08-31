@@ -140,7 +140,7 @@ const CardContainer = styled.div`
 `;
 
 const Card = styled.div`
-  background-color: ${({ bgColor, theme }) => bgColor || theme.colors.greyLight}; 
+  background-color: ${({ $bgColor, theme }) => $bgColor || theme.colors.greyLight}; 
   border: 1px solid ${({ theme }) => theme.colors.grey};
   border-radius: ${({ theme }) => theme.spacing(2)};
   padding: ${({ theme }) => theme.spacing(4)};
@@ -259,7 +259,7 @@ const Dashboard = () => {
         <RightContent>
           <Section>
           <CardContainer>
-              <Card bgColor={theme.colors.limeGreenExtraLight}>
+              <Card $bgColor={theme.colors.limeGreenExtraLight}>
               <span className="edit-icon">
                 <FiEdit />
               </span>
@@ -267,7 +267,7 @@ const Dashboard = () => {
                 <p>SEK 0</p>
                 <span>Additional Info</span>
               </Card>
-              <Card bgColor={theme.colors.greyLight}>
+              <Card $bgColor={theme.colors.greyLight}>
               <span className="edit-icon" onClick={() => navigate('/spendings-management')} >
                 <FiEdit />
               </span>
@@ -275,7 +275,7 @@ const Dashboard = () => {
                 <p>SEK {loading ? 'Loading...' : totalSpendings}</p>
                 <span>Additional Info</span>
               </Card>
-              <Card bgColor={theme.colors.pinkLight}>
+              <Card $bgColor={theme.colors.pinkLight}>
               <span className="edit-icon">
                 <FiEdit />
               </span>
@@ -283,7 +283,7 @@ const Dashboard = () => {
                 <p>SEK 0</p>
                 <span>Additional Info</span>
               </Card>
-              <Card bgColor={theme.colors.limeGreenLight}>
+              <Card $bgColor={theme.colors.limeGreenLight}>
               <span className="edit-icon" onClick={() => navigate('/income-management')} >
                 <FiEdit />
               </span>
