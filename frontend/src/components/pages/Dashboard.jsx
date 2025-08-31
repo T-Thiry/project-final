@@ -180,6 +180,8 @@ const Dashboard = () => {
   const [chartData, setChartData] = useState([]);
   const navigate = useNavigate();
 
+  const balance = income - totalSpendings;
+
   const handleLogout = () => {
     localStorage.removeItem('accessToken'); 
     navigate('/'); 
@@ -244,8 +246,6 @@ const Dashboard = () => {
     fetchChartData();
   }, [totalSpendings]); // Re-fetch chart data when totalSpendings changes
       
-      
-
   return (
     <>
       <Navbar>
@@ -278,7 +278,7 @@ const Dashboard = () => {
                 <FiEdit />
               </span>
                 <h4>Balance</h4>
-                <p>SEK 0</p>
+                {loading ? null : <p>SEK {balance}</p>}
                 <span>Additional Info</span>
               </Card>
               <Card $bgColor={theme.colors.greyLight}>
@@ -286,7 +286,7 @@ const Dashboard = () => {
                 <FiEdit />
               </span>
                 <h4>Spendings</h4>
-                <p>SEK {loading ? 'Loading...' : totalSpendings}</p>
+                {loading ? null : <p>SEK {totalSpendings}</p>}
                 <span>Additional Info</span>
               </Card>
               <Card $bgColor={theme.colors.pinkLight}>
