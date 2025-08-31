@@ -246,7 +246,7 @@ const Login = () => {
         email,
         password
       });
-      console.log(response.data);
+      console.log("Login successful");
 
       // Store the accessToken in localStorage
     localStorage.setItem('accessToken', response.data.response.accessToken);

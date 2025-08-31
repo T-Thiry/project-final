@@ -2,10 +2,7 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'; 
 import { User } from '../models/User.js';
-import dotenv from 'dotenv';
-
-dotenv.config(); // Load environment variables
-console.log('JWT_SECRET:', process.env.JWT_SECRET);
+import { authenticateUser } from '../middleware/authMiddleware.js';
 
 const router = express.Router()
 const JWT_SECRET = process.env.JWT_SECRET || 'your_secure_secret_key'; // Use environment variable for the secret key
@@ -107,6 +104,28 @@ router.post("/login", async (req, res) => {
     })
   }
  })
+
+ // GET - Protected dashboard route
+ router.get("/dashboard", authenticateUser, async (req, res) => {
+  try {
+    res.status(200).json({
+      success: true,
+      message: "User authenticated successfully.",
+      response: {
+        id: req.user._id,
+        name: req.user.name,
+        email: req.user.email,
+      }
+    })
+  } catch (error) {
+    console.error("Dashboard error:", error)
+    res.status(500).json({
+      success: false,
+      message: "Failed to access dashboard.",
+      response: error.message 
+    })
+  }
+  })
 
  export default router
  
