@@ -1,94 +1,16 @@
 import React, { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { FiBarChart2, FiCreditCard, FiTrendingUp, FiEdit } from 'react-icons/fi';
-import { FaCoins } from 'react-icons/fa';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { theme } from '../../styles/theme';
 import VariableExpenses from './VariableExpenses';
 import FixedExpenses from './FixedExpenses';
-
-const Navbar = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: ${({ theme }) => theme.spacing(4)};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.greyLight};
-  background-color: ${({ theme }) => theme.colors.primary};
-  width: 100%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
-
-const Logo = styled.h1`
-  font-size: 1rem;
-  font-weight: ${({ theme }) => theme.typography.fontWeightBold};
-  color: ${({ theme }) => theme.colors.white};
-  margin: 0;
-`;
-
-const NavButtons = styled.div`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing(4)};
-
-  @media (max-width: 767px) {
-    display: none;
-  }
-`;
-
-const Button = styled.button`
-  background-color: ${({ theme }) => theme.colors.pink};
-  color: ${({ theme }) => theme.colors.black};
-  padding: ${({ theme }) => theme.spacing(2)} ${({ theme }) => theme.spacing(4)};
-  font-size: ${({ theme }) => theme.typography.fontSize};
-  border: none;
-  border-radius: ${({ theme }) => theme.spacing(2)};
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.limeGreenLight};
-  }
-`;
+import DashboardCards from './DashboardCards';
+import DashboardChart from './DashboardChart';
+import LeftPanel from './LeftPanel';
+import Navbar from './Navbar';
 
 const DashboardContainer = styled.div`
   display: flex;
   height: calc(100vh - ${({ theme }) => theme.spacing(8)}); // Full height minus navbar height
-`;
-
-const LeftPanel = styled.div`
-  width: 190px;
-  background-color: ${({ theme }) => theme.colors.white};
-  padding: ${({ theme }) => theme.spacing(4)};
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(1)};
-
-  h2 {
-  margin-top: ${({ theme }) => theme.spacing(4)};
-  margin-bottom: ${({ theme }) => theme.spacing(2)};
-  }
-
-  @media (max-width: 767px) {
-  display: none; // Hide left panel on mobile
-`;
-
-const TabButton = styled.button`
-  background-color: ${({ theme }) => theme.colors.greyLight};
-  color: ${({ theme }) => theme.colors.black};
-  padding: ${({ theme }) => theme.spacing(3)};
-  font-size: 1rem;
-  border: none;
-  border-radius: ${({ theme }) => theme.spacing(2)};
-  cursor: pointer;
-  text-align: left;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(1)};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.primaryLight};
-    color: ${({ theme }) => theme.colors.white};
-  }
 `;
 
 const RightContent = styled.div`
@@ -122,54 +44,6 @@ const Section = styled.div`
 
   &.chart-section h3 {
     margin-bottom: ${({ theme }) => theme.spacing(2)};
-  }
-`;
-
-const CardContainer = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(4)};
-  grid-template-columns: repeat(1, 1fr); // Default to one column
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr); // Two columns on tablet
-  }
-
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr); // Two columns on desktop
-  }
-`;
-
-const Card = styled.div`
-  background-color: ${({ $bgColor, theme }) => $bgColor || theme.colors.greyLight}; 
-  border: 1px solid ${({ theme }) => theme.colors.grey};
-  border-radius: ${({ theme }) => theme.spacing(2)};
-  padding: ${({ theme }) => theme.spacing(4)};
-  position: relative;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-  h4 {
-    font-size: 1rem;
-    font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
-    margin-bottom: ${({ theme }) => theme.spacing(1)};
-  }
-
-  p {
-    font-size: 1.25rem;
-    font-weight: ${({ theme }) => theme.typography.fontWeightSemiBold};
-    margin: 0;
-  }
-
-  span {
-    font-size: 0.9rem;
-    color: ${({ theme }) => theme.colors.primaryDark};
-  }
-
-   .edit-icon {
-    position: absolute;
-    top: ${({ theme }) => theme.spacing(2)};
-    right: ${({ theme }) => theme.spacing(2)};
-    cursor: pointer;
-    font-size: 1rem; // Adjust the size of the emoji
   }
 `;
 
@@ -248,102 +122,21 @@ const Dashboard = () => {
       
   return (
     <>
-      <Navbar>
-        <Logo>StoryBudget</Logo>
-        <NavButtons>
-          <Button onClick={handleLogout}>Logout</Button>
-        </NavButtons>
-      </Navbar>
+      <Navbar onLogout={handleLogout} />
       <DashboardContainer>
-        <LeftPanel>
-          <h2>Dashboard</h2>
-          <TabButton>
-            <FiBarChart2 size={20} style={{ marginRight: '8px' }} /> Balance
-          </TabButton>
-          <TabButton>
-            <FiCreditCard size={20} style={{ marginRight: '8px' }} /> Spendings
-          </TabButton>
-          <TabButton>
-            <FaCoins size={20} style={{ marginRight: '8px' }} /> Savings
-          </TabButton>
-          <TabButton>
-            <FiTrendingUp size={20} style={{ marginRight: '8px' }} /> Income
-          </TabButton>
-        </LeftPanel>
+        <LeftPanel />
         <RightContent>
           <Section>
-          <CardContainer>
-              <Card $bgColor={theme.colors.limeGreenExtraLight}>
-              <span className="edit-icon">
-                <FiEdit />
-              </span>
-                <h4>Balance</h4>
-                {loading ? null : <p>SEK {balance}</p>}
-                <span>Additional Info</span>
-              </Card>
-              <Card $bgColor={theme.colors.greyLight}>
-              <span className="edit-icon" onClick={() => navigate('/spendings-management')} >
-                <FiEdit />
-              </span>
-                <h4>Spendings</h4>
-                {loading ? null : <p>SEK {totalSpendings}</p>}
-                <span>Additional Info</span>
-              </Card>
-              <Card $bgColor={theme.colors.pinkLight}>
-              <span className="edit-icon">
-                <FiEdit />
-              </span>
-                <h4>Savings</h4>
-                <p>SEK 0</p>
-                <span>Additional Info</span>
-              </Card>
-              <Card $bgColor={theme.colors.limeGreenLight}>
-              <span className="edit-icon" onClick={() => navigate('/income-management')} >
-                <FiEdit />
-              </span>
-                <h4>Income</h4>
-                {loading ? null : <p>SEK {income}</p>}
-                <span>Additional Info</span>
-              </Card>
-            </CardContainer>
+            <DashboardCards
+              balance={balance}
+              totalSpendings={totalSpendings}
+              income={income}
+              loading={loading}
+            />
           </Section>
           <Section className='chart-section'>
             <h3>Balance</h3>
-            <ResponsiveContainer width="100%" height={250}>
-              <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="1 2" />
-                <XAxis dataKey="name"
-                tick={{
-                  fill: theme.colors.greyLight, // Lighter gray color for the text
-                }} 
-                />
-                <YAxis
-                  tickFormatter={(value) => {
-                    if (value >= 1000) {
-                      return `${(value / 1000).toFixed(1)}K`; // Format numbers as "K"
-                    }
-                    return value;
-                  }}
-                  tick={{
-                    fill: theme.colors.greyLight, // Lighter gray color for the text
-                  }}
-                />
-                <Tooltip
-                  formatter={(value) => {
-                    if (value >= 1000) {
-                      return `${(value / 1000).toFixed(1)}K`; // Format tooltip numbers as "K"
-                    }
-                    return value;
-                  }}
-                />
-                <Legend
-                  align="left" 
-                  wrapperStyle={{ marginLeft: '65px' }}
-                />
-                <Bar dataKey="Income" fill={theme.colors.limeGreen} />
-                <Bar dataKey="Spendings" fill={theme.colors.pinkLight} />
-              </BarChart>
-            </ResponsiveContainer>
+            <DashboardChart chartData={chartData} />
           </Section>
           <Section>
             <h3>Variable Expenses</h3>
