@@ -75,7 +75,7 @@ const Dashboard = () => {
 
   const fetchIncome = async () => {
     try {
-      const response = await fetch('http://localhost:8080/income');
+      const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/income`);
       if (!response.ok) {
         throw new Error('Failed to fetch income');
       }
@@ -88,7 +88,7 @@ const Dashboard = () => {
 
     const fetchTotalSpendings = async () => {
       try {
-        const response = await fetch('http://localhost:8080/spendings/total'); 
+        const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/spendings/total`); 
         if (!response.ok) {
           throw new Error('Failed to fetch total spendings');
         }
@@ -102,7 +102,7 @@ const Dashboard = () => {
     useEffect(() => {
       const fetchChartData = async () => {
         try {
-          const response = await fetch('http://localhost:8080/income/months');
+          const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/income/months`);
           if (!response.ok) {
             throw new Error('Failed to fetch months data');
           }

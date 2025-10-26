@@ -127,7 +127,7 @@ const IncomeManagement = () => {
   useEffect(() => {
     const fetchMonths = async () => {
       try {
-        const response = await fetch('http://localhost:8080/income/months');
+        const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/income/months`);
         if (!response.ok) {
           throw new Error('Failed to fetch months');
         }
@@ -165,7 +165,7 @@ const IncomeManagement = () => {
   };
 
   const saveIncomeToAPI = async (income, month) => {
-    const response = await fetch('http://localhost:8080/income', {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/income`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -186,7 +186,7 @@ const IncomeManagement = () => {
     if (!confirmDelete) return;
 
     try {
-      await fetch(`http://localhost:8080/income/${id}`, {
+      await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/income/${id}`, {
         method: 'DELETE',
       });
       setMonths((prevMonths) => prevMonths.filter((month) => month._id !== id));

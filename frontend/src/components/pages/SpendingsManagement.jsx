@@ -130,7 +130,7 @@ const SpendingsManagement = () => {
   useEffect(() => {
     const fetchSpendings = async () => {
       try {
-        const response = await fetch('http://localhost:8080/spendings');
+        const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/spendings`);
         if (!response.ok) {
           throw new Error('Failed to fetch spendings');
         }
@@ -166,7 +166,7 @@ const SpendingsManagement = () => {
   };
 
   const saveSpendingToAPI = async (category, amount) => {
-    const response = await fetch('http://localhost:8080/spendings', {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/spendings`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -188,7 +188,7 @@ const SpendingsManagement = () => {
     if (!confirmDelete) return;
 
     try {
-      await fetch(`http://localhost:8080/spendings/${id}`, {
+      await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/spendings/${id}`, {
         method: 'DELETE',
       });
       setSpendings((prevSpendings) => prevSpendings.filter((spending) => spending._id !== id));
