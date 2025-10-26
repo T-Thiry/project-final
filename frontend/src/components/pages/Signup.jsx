@@ -249,7 +249,7 @@ const Signup = () => {
         email,
         password
       });
-      console.log(response.data);
+      console.log("Signup successful");
 
       // Store the accessToken in localStorage
     localStorage.setItem('accessToken', response.data.response.accessToken);
